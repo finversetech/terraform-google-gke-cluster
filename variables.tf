@@ -54,7 +54,7 @@ variable "daily_maintenance_window_start_time" {
   EOF
 }
 
-variable "gcp_shielded_virtual_machines" {
+variable "shielded_nodes" {
   type = bool
   description = <<EOF
   Flag that enables the google shielded virtual machine option for the cluster
