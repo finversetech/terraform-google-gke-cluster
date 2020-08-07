@@ -235,6 +235,12 @@ resource "google_container_node_pool" "node_pool" {
 
     service_account = google_service_account.default.email
 
+    shielded_instance_config = {
+      enable_secure_boot = true
+      enable_vtpm = true
+      enable_integrity_monitoring = true
+    }
+
     # Size of the disk attached to each node, specified in GB. The smallest
     # allowed disk size is 10GB. Defaults to 100GB.
     disk_size_gb = lookup(
