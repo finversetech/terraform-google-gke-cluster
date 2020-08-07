@@ -60,6 +60,8 @@ resource "google_container_cluster" "cluster" {
 
   min_master_version = local.min_master_version
 
+  enable_shielded_nodes = var.gcp_shielded_virtual_machines
+
   provider = google-beta
 
   dynamic "release_channel" {
