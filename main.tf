@@ -168,11 +168,8 @@ resource "google_container_cluster" "cluster" {
     }
   }
 
-  # Desired config for the first Node
-  node_config {
-    shielded_instance_config = {
-      enable_secure_boot = true
-    }
+  shielded_instance_config = {
+    enable_secure_boot = true
   }
 
   # The loggingservice that the cluster should write logs to. Using the
@@ -241,10 +238,6 @@ resource "google_container_node_pool" "node_pool" {
     )
 
     service_account = google_service_account.default.email
-
-    shielded_instance_config = {
-      enable_secure_boot = true
-    }
 
     # Size of the disk attached to each node, specified in GB. The smallest
     # allowed disk size is 10GB. Defaults to 100GB.
