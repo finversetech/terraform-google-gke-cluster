@@ -86,6 +86,13 @@ resource "google_container_cluster" "cluster" {
     }
   }
 
+  node_config {
+    shielded_instance_config {
+      enable_secure_boot = true
+    }
+  }
+
+
   # A set of options for creating a private cluster.
   private_cluster_config {
     # Whether the master's internal IP address is used as the cluster endpoint.
@@ -168,10 +175,6 @@ resource "google_container_cluster" "cluster" {
     }
   }
 
-  shielded_instance_config = {
-    enable_secure_boot = true
-  }
-
   # The loggingservice that the cluster should write logs to. Using the
   # 'logging.googleapis.com/kubernetes' option makes use of new Stackdriver
   # Kubernetes integration.
@@ -238,6 +241,10 @@ resource "google_container_node_pool" "node_pool" {
     )
 
     service_account = google_service_account.default.email
+
+    shielded_instance_config {
+      enable_secure_boot = true
+    }
 
     # Size of the disk attached to each node, specified in GB. The smallest
     # allowed disk size is 10GB. Defaults to 100GB.
