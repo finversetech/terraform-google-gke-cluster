@@ -60,7 +60,7 @@ resource "google_container_cluster" "cluster" {
 
   min_master_version = local.min_master_version
 
-  enable_shielded_nodes = var.gcp_shielded_virtual_machines
+  enable_shielded_nodes = var.shielded_nodes
 
   provider = google-beta
 
@@ -168,6 +168,13 @@ resource "google_container_cluster" "cluster" {
     }
   }
 
+  # Desired config for the first Node
+  node_config {
+    shielded_instance_config = {
+      enable_secure_boot = true
+    }
+  }
+
   # The loggingservice that the cluster should write logs to. Using the
   # 'logging.googleapis.com/kubernetes' option makes use of new Stackdriver
   # Kubernetes integration.
@@ -237,8 +244,6 @@ resource "google_container_node_pool" "node_pool" {
 
     shielded_instance_config = {
       enable_secure_boot = true
-      enable_vtpm = true
-      enable_integrity_monitoring = true
     }
 
     # Size of the disk attached to each node, specified in GB. The smallest
